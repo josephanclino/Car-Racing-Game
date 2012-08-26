@@ -8,6 +8,16 @@ var win = Titanium.UI.createWindow({
     backgroundColor:'#fff'
 });
 
+
+
+var lbl = Ti.UI.createLabel({
+	text: 'Car X = ',
+	top: 20,
+	left: 50,
+	color: '#fff'
+});
+
+
 //create a road
 var road = Ti.UI.createView({
 	backgroundColor:'#000',
@@ -17,6 +27,8 @@ var road = Ti.UI.createView({
     left: 20
 });
 win.add(road);
+
+//road.add(lbl);
 
 //create a car, that we would manipulate with accelerometer left to right
 var car = Ti.UI.createView({
@@ -70,9 +82,15 @@ Titanium.Accelerometer.addEventListener('update',function(e)
         car.left += (last_x*SPEED); 
         //car.top -= (last_y*SPEED);
         
-        //restrict car from moving out of screen
-        if(car.left <= 0){} car.left = 0;
-        if(car.left >= Titanium.Platform.displayCaps.platformWidth) car.left = Titanium.Platform.displayCaps.platformWidth;
+        //lbl.text = "Car X = "+ car.left;
+        
+        //restrict car from moving out of road
+        if(car.left <= 0){
+        	car.left = 0;
+        } 
+        if(car.left >= (road.width - car.width)){
+        	car.left = (road.width - car.width);
+        } 
         
         //show crash message if car is out of road
         //to-do
